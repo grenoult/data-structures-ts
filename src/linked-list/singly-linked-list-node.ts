@@ -1,4 +1,4 @@
-import SinglyLinkedList from "./single-linked-list";
+import SinglyLinkedList from "./singly-linked-list";
 
 class SinglyLinkedListNode
 {

@@ -1,4 +1,4 @@
-import SinglyLinkedList from "../../src/linked-list/single-linked-list";
+import SinglyLinkedList from "../../src/linked-list/singly-linked-list";
 
 describe('singly linked list traversal', () => {
     let singleLinkedList: SinglyLinkedList;
