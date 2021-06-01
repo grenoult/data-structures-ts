@@ -1,7 +1,7 @@
 import LinkedListInterface from "./linked-list-interface";
 import SinglyLinkedListNode from "./singly-linked-list-node";
 
-class SingleLinkedList implements LinkedListInterface
+class SinglyLinkedList implements LinkedListInterface
 {
     private _head: SinglyLinkedListNode;
     private _tail: SinglyLinkedListNode;
@@ -10,7 +10,7 @@ class SingleLinkedList implements LinkedListInterface
         return this._head;
     }
 
-    public add(value:string) {
+    public add(value:string): void {
         const newNode = new SinglyLinkedListNode();
         newNode.value = value;
 
@@ -24,7 +24,7 @@ class SingleLinkedList implements LinkedListInterface
         this._tail = newNode; // TODO necessary?
     }
 
-    public search(value:string) {
+    public search(value:string): boolean|SinglyLinkedListNode {
         let currentNode = this._head;
 
         do {
@@ -76,4 +76,4 @@ class SingleLinkedList implements LinkedListInterface
 
 }
 
-export default SingleLinkedList;
+export default SinglyLinkedList;

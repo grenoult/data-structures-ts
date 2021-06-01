@@ -1,9 +1,9 @@
 import SinglyLinkedListNode from "../../src/linked-list/singly-linked-list-node";
-import SingleLinkedList from "../../src/linked-list/single-linked-list";
+import SinglyLinkedList from "../../src/linked-list/single-linked-list";
 
 describe('singly linked list manipulation', () => {
     it('create list, add and remove nodes', () => {
-        const singleLinkedList = new SingleLinkedList();
+        const singleLinkedList = new SinglyLinkedList();
 
         // Add list with Nodes: 'a', 'b' and 'c'
         singleLinkedList.add('a');
@@ -25,7 +25,7 @@ describe('singly linked list manipulation', () => {
     });
 
     it('search empty list', () => {
-        const singleLinkedList = new SingleLinkedList();
+        const singleLinkedList = new SinglyLinkedList();
 
         // Search non existing node on empty list
         const unknownNode = singleLinkedList.search('d');
@@ -33,7 +33,7 @@ describe('singly linked list manipulation', () => {
     });
 
     it('remove from empty list', () => {
-        const singleLinkedList = new SingleLinkedList();
+        const singleLinkedList = new SinglyLinkedList();
         const bNode = new SinglyLinkedListNode();
         bNode.value = 'd';
 
@@ -43,7 +43,7 @@ describe('singly linked list manipulation', () => {
     });
 
     it('remove unknow node from non-empty list', () => {
-        const singleLinkedList = new SingleLinkedList();
+        const singleLinkedList = new SinglyLinkedList();
         singleLinkedList.add('a');
 
         const bNode = new SinglyLinkedListNode();

@@ -1,3 +1,5 @@
+import SinglyLinkedList from "./single-linked-list";
+
 class SinglyLinkedListNode
 {
     private _value: string;
@@ -7,7 +9,7 @@ class SinglyLinkedListNode
         this._value = value;
     }
 
-    public get value() {
+    public get value(): string {
         return this._value;
     }
 
@@ -15,7 +17,7 @@ class SinglyLinkedListNode
         this._next = next;
     }
 
-    public get next() {
+    public get next(): SinglyLinkedListNode {
         return this._next;
     }
 }
