@@ -1,5 +1,3 @@
-import SinglyLinkedList from "./singly-linked-list";
-
 class SinglyLinkedListNode
 {
     private _value: string;

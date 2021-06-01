@@ -24,7 +24,7 @@ class SinglyLinkedList implements LinkedListInterface
         this._tail = newNode; // TODO necessary?
     }
 
-    public search(value:string): boolean|SinglyLinkedListNode {
+    public search(value:string): SinglyLinkedListNode {
         let currentNode = this._head;
 
         do {
