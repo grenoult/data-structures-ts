@@ -1,8 +1,7 @@
-import SinglyLinkedListNode from "../src/linked-list/singly-linked-list-node";
-import SingleLinkedList from "../src/linked-list/single-linked-list";
+import SinglyLinkedListNode from "../../src/linked-list/singly-linked-list-node";
+import SingleLinkedList from "../../src/linked-list/single-linked-list";
 
-
-describe('singly linked list', () => {
+describe('singly linked list manipulation', () => {
     it('create list, add and remove nodes', () => {
         const singleLinkedList = new SingleLinkedList();
 

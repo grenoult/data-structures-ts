@@ -3,25 +3,29 @@ import SinglyLinkedListNode from "./singly-linked-list-node";
 
 class SingleLinkedList implements LinkedListInterface
 {
-    private head: SinglyLinkedListNode;
-    private tail: SinglyLinkedListNode;
+    private _head: SinglyLinkedListNode;
+    private _tail: SinglyLinkedListNode;
+
+    public get head(): SinglyLinkedListNode {
+        return this._head;
+    }
 
     public add(value:string) {
         const newNode = new SinglyLinkedListNode();
         newNode.value = value;
 
-        if (this.head === undefined) {
-            this.head = newNode;
+        if (this._head === undefined) {
+            this._head = newNode;
         } else {
-            const previousTail = this.tail;
+            const previousTail = this._tail;
             previousTail.next = newNode;
         }
 
-        this.tail = newNode; // TODO necessary?
+        this._tail = newNode; // TODO necessary?
     }
 
     public search(value:string) {
-        let currentNode = this.head;
+        let currentNode = this._head;
 
         do {
             // If we search before we have any result, exit.
@@ -43,7 +47,13 @@ class SingleLinkedList implements LinkedListInterface
     }
 
     public remove(node: SinglyLinkedListNode): boolean {
-        let currentNode = this.head;
+        let currentNode = this._head;
+
+        // If we find in beginning of list, update head and exit
+        if (currentNode === node) {
+            this._head = currentNode.next;
+            return true;
+        }
 
         do {
             // If we search on empty list, return false.
@@ -52,7 +62,7 @@ class SingleLinkedList implements LinkedListInterface
                 return false;
             }
 
-            // If we found the result, update previous node and exit
+            // If we find in middle or end of list, update previous node and exit
             if (currentNode.next === node) {
                 currentNode.next = node.next;
                 return true;
