@@ -4,7 +4,7 @@ interface LinkedListInterface
 {
     search(value:string): SinglyLinkedListNode;
     add(value:string): void;
-    remove(value:string): void;
+    remove(node: SinglyLinkedListNode): boolean;
 }
 
 export default LinkedListInterface;

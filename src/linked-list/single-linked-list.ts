@@ -42,6 +42,28 @@ class SingleLinkedList implements LinkedListInterface
         return null;
     }
 
+    public remove(node: SinglyLinkedListNode): boolean {
+        let currentNode = this.head;
+
+        do {
+            // If we search on empty list, return false.
+            // Or if we reach end of list, return false.
+            if (currentNode === undefined) {
+                return false;
+            }
+
+            // If we found the result, update previous node and exit
+            if (currentNode.next === node) {
+                currentNode.next = node.next;
+                return true;
+            }
+
+            currentNode = currentNode.next;
+        } while (currentNode instanceof SinglyLinkedListNode);
+
+        return false;
+    }
+
 }
 
 export default SingleLinkedList;
