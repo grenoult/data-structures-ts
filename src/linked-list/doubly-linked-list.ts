@@ -12,8 +12,6 @@ class DoublyLinkedList {
         return this._tail;
     }
 
-// TODO add `addInMiddle` or something similar
-
     public add(value: string): void {
         const newNode = new DoublyLinkedListNode();
         newNode.value = value;
@@ -23,11 +21,74 @@ class DoublyLinkedList {
         } else {
             const previousTail = this._tail;
             previousTail.next = newNode;
-            // TODO: update prev
-
+            newNode.prev = previousTail;
         }
 
         this._tail = newNode;
+    }
+
+    public addAfter(currentNode: DoublyLinkedListNode, value: string): void {
+        // Create new node
+        const newNode = new DoublyLinkedListNode();
+        newNode.value = value;
+
+        // Update if tail
+        if (currentNode === this._tail) {
+            this._tail = newNode;
+        }
+
+        // Insert new node: references with currentNode
+        newNode.next = currentNode.next; // New node next = current node next
+        newNode.prev = currentNode;
+
+        // Update current node next to be next node
+        currentNode.next = newNode;
+    }
+
+    public search(value: string): DoublyLinkedListNode {
+        let currentNode = this._head;
+
+        do {
+            // If we search before we have any result, exit.
+            // Or if we reach end of list, exit.
+            if (currentNode === undefined) {
+                return null;
+            }
+            
+            // If we found the result, exit
+            if (currentNode.value === value) {
+                return currentNode;
+            }
+
+            currentNode = currentNode.next;
+
+        } while (currentNode instanceof DoublyLinkedListNode);
+
+        return null;
+    }
+
+    public remove(node: DoublyLinkedListNode): boolean {
+        // If we find in beginning of list, update head and exit
+        if (node === this._head) {
+            this._head = node.next;
+            this._head.prev = undefined;
+            return true;
+        }
+
+        // If we find in end of list, update tail and exit
+        if (node === this._tail) {
+            this._tail = node.prev;
+            this._tail.next = undefined;
+            return true;
+        }
+
+        // If we find in middle of list, update prev and next and exit
+        const previousNode = node.prev;
+        const nextNode = node.next;
+
+        previousNode.next = nextNode;
+        nextNode.prev = previousNode;
+        return true;
     }
 }
 
