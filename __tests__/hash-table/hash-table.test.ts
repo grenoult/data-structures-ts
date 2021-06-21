@@ -15,7 +15,13 @@ describe('hash table', () => {
 
         // Test removing
         expect(hashTable.remove(myObjKey)).toBeTruthy();
-        expect(hashTable.find(myObjKey)).toBeNull();
+        expect(hashTable.find(myObjKey)).toBeUndefined();
+        expect(hashTable.remove(myObjKey)).toBeFalsy();
     });
 
+    it('Test hash function', () => {
+        expect(HashTable.hashKey('test')).toEqual(48);
+        expect(HashTable.hashKey('hashmap')).toEqual(38);
+        expect(HashTable.hashKey('Abc')).toEqual(62);
+    });
 })

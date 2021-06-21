@@ -40,4 +40,5 @@ For example: `myVar['abc'] === myVar.abc`.
 It comes with its drawbacks, for example not knowing the length of the object natively (up to ES5, see below for more information). 
 
 ### Thoughts
+TODO: mention about collisions, max size
 That being said, we can use `var size = Object.keys(myObj).length;` with ES6+.

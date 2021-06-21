@@ -1,6 +1,6 @@
 class HashTable
 {
-    private _table: any[];
+    private _table: any[] = [];
 
     /**
      * Adds value in table based on its key.
@@ -10,7 +10,7 @@ class HashTable
      * @returns True on success. TODO update to void?
      */
     public add(key: string, value: any): boolean {
-        const index = this.hashKey(key);
+        const index = HashTable.hashKey(key);
 
         this._table[index] = value;
 
@@ -25,9 +25,8 @@ class HashTable
      * @returns Value if found, undefined otherwise.
      */
     public find(key: string): any {
-        const index = this.hashKey(key);
-
-        if (key in this._table) {
+        const index = HashTable.hashKey(key);
+        if (index in this._table) {
             return this._table[index];
         }
 
@@ -42,9 +41,9 @@ class HashTable
      * @returns boolean True if removed, false if not found.
      */
     public remove(key: string): boolean {
-        const index = this.hashKey(key);
+        const index = HashTable.hashKey(key);
 
-        if (key in this._table) {
+        if (index in this._table) {
             delete this._table[index];
             return true;
         }
@@ -52,8 +51,18 @@ class HashTable
         return false;
     }
 
-    private hashKey(key: string): number {
-        return 123;
+    static hashKey(key: string): number {
+        // For simplicity, we assume array can contain up to 100 elements.
+        // If we want more than 100 elements, we would need to rehash the array: https://en.wikipedia.org/wiki/Hash_table#Dynamic_resizing
+        const maxSize = 100;
+
+        let sum = 0;
+
+        for (let i = 0; i < key.length; i++) {
+            sum += key.charCodeAt(i);
+        }
+
+        return sum%maxSize;
     }
 }
 
