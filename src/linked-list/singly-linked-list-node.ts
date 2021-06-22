@@ -1,13 +1,13 @@
 class SinglyLinkedListNode
 {
-    private _value: string;
+    private _value: any;
     private _next: SinglyLinkedListNode;
 
-    public set value(value: string) {
+    public set value(value: any) {
         this._value = value;
     }
 
-    public get value(): string {
+    public get value(): any {
         return this._value;
     }
 

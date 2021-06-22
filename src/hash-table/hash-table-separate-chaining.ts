@@ -1,9 +1,6 @@
-/**
- * Basic implementation of Hash Table.
- * See README.md file for more details.
- * This doesn't handle collisions well (overwrite)
- */
-class HashTable
+import SinglyLinkedListNode from "../linked-list/singly-linked-list-node";
+
+class HashTableSeparateChaining
 {
     private _table: any[] = [];
 
@@ -15,10 +12,26 @@ class HashTable
      * @returns True on success. TODO update to void?
      */
     public add(key: string, value: any): boolean {
-        const index = HashTable.hashKey(key);
+        const index = HashTableSeparateChaining.hashKey(key);
 
-        this._table[index] = value;
+        const linkedListItem = new SinglyLinkedListNode();
+        linkedListItem.value = {key: key, value: value};
 
+        if (this._table[index] instanceof SinglyLinkedListNode) {
+            // If already value, add item to end of list
+            let node = this._table[index];
+            while (node instanceof SinglyLinkedListNode) {
+                if (node.value.key === key) {
+                    // We detected the key (before hash) is already used. Return false.
+                    return false;
+                }
+                node = node.next;
+            }
+            node.next = linkedListItem;
+        } else {
+            // If index is not used yet, add node
+            this._table[index] = linkedListItem;
+        }
         return true;
     }
 
@@ -29,7 +42,7 @@ class HashTable
      * @returns Value if found, undefined otherwise.
      */
     public find(key: string): any {
-        const index = HashTable.hashKey(key);
+        const index = HashTableSeparateChaining.hashKey(key);
         if (index in this._table) {
             return this._table[index];
         }
@@ -44,7 +57,7 @@ class HashTable
      * @returns boolean True if removed, false if not found.
      */
     public remove(key: string): boolean {
-        const index = HashTable.hashKey(key);
+        const index = HashTableSeparateChaining.hashKey(key);
 
         if (index in this._table) {
             delete this._table[index];
@@ -69,4 +82,4 @@ class HashTable
     }
 }
 
-export default HashTable;
+export default HashTableSeparateChaining;
