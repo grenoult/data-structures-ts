@@ -5,14 +5,14 @@ describe('hash table with separate chaining for collision detection', () => {
         const myObj = {id: 123, title: 'test'}; // Object to store in hash table
         const myObjKey = 'myObj'; // string to identify object in hash table
 
-        let hashTable = new HashTableSeparateChaining();
+        const hashTable = new HashTableSeparateChaining();
 
         // Test adding
         expect(hashTable.add(myObjKey, myObj)).toBeTruthy();
         expect(hashTable.add(myObjKey, myObj)).toBeFalsy(); // Can't add the same item twice because key (before) is already used
 
         // Test retrieving
-        // expect(hashTable.find(myObjKey)).toEqual(myObj);
+        expect(hashTable.find(myObjKey)).toEqual(myObj);
 
         // Test removing
         // expect(hashTable.remove(myObjKey)).toBeTruthy();

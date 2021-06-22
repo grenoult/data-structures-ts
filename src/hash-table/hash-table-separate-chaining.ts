@@ -44,7 +44,15 @@ class HashTableSeparateChaining
     public find(key: string): any {
         const index = HashTableSeparateChaining.hashKey(key);
         if (index in this._table) {
-            return this._table[index];
+            // Index exists: let's go through linked list nodes to find item
+            let node = this._table[index];
+            while (node instanceof SinglyLinkedListNode) {
+                if (node.value.key === key) {
+                    // We found matching key, we return value;
+                    return node.value.value;
+                }
+                node = node.next;
+            }
         }
 
         return undefined;

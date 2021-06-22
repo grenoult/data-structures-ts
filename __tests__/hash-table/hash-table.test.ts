@@ -5,7 +5,7 @@ describe('hash table', () => {
         const myObj = {id: 123, title: 'test'}; // Object to store in hash table
         const myObjKey = 'myObj'; // string to identify object in hash table
 
-        let hashTable = new HashTable();
+        const hashTable = new HashTable();
 
         // Test adding
         expect(hashTable.add(myObjKey, myObj)).toBeTruthy();
