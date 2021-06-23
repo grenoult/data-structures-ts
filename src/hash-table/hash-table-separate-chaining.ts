@@ -16,18 +16,23 @@ class HashTableSeparateChaining
 
         const linkedListItem = new SinglyLinkedListNode();
         linkedListItem.value = {key: key, value: value};
+        linkedListItem.next = undefined;
 
         if (this._table[index] instanceof SinglyLinkedListNode) {
             // If already value, add item to end of list
             let node = this._table[index];
+            let previousNode = node;
             while (node instanceof SinglyLinkedListNode) {
                 if (node.value.key === key) {
                     // We detected the key (before hash) is already used. Return false.
                     return false;
                 }
+                previousNode = node;
                 node = node.next;
             }
-            node.next = linkedListItem;
+
+            // Add to last item of the list
+            previousNode.next = linkedListItem;
         } else {
             // If index is not used yet, add node
             this._table[index] = linkedListItem;
@@ -66,12 +71,31 @@ class HashTableSeparateChaining
      */
     public remove(key: string): boolean {
         const index = HashTableSeparateChaining.hashKey(key);
-
         if (index in this._table) {
-            delete this._table[index];
-            return true;
+            // Index exists: let's go through linked list nodes to find item
+            let node = this._table[index];
+            let previousNode = undefined;
+            while (node instanceof SinglyLinkedListNode) {
+                if (node.value.key === key) {
+                    // update previous node or head
+                    if (previousNode instanceof SinglyLinkedListNode) {
+                        previousNode.next = node.next;
+                    } else {
+                        this._table[index] = node.next;
+                    }
+
+                    // `node` will be removed during garbage collection
+
+                    return true;
+                }
+
+                // Item not found, let's go to the next node in the linked list
+                previousNode = node;
+                node = node.next;
+            }
         }
 
+        // Item not found in the list, return false;
         return false;
     }
 
