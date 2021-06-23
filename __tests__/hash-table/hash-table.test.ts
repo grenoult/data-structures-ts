@@ -33,7 +33,7 @@ describe('hash table', () => {
         const obj2 = { id: 456, title: 'test2' };
         const obj2Key = 'Abcd';
 
-        let hashTable = new HashTable();
+        const hashTable = new HashTable();
 
         hashTable.add(obj1Key, obj1);
         hashTable.add(obj2Key, obj2);
