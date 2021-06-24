@@ -41,4 +41,20 @@ It comes with its drawbacks, for example not knowing the length of the object na
 
 ### Thoughts
 * `src/hash-table/hash-table.ts` is a very basic hash table implementation. It doesn't handle collisions well and overwrite previous items. 
-We can use `var size = Object.keys(myObj).length;` with ES6+.
+* `src/hash-table/hash-table-separate-chaining.ts` fixes this collision with linked lists: each items in a the array will have a linked list which would be of one item most of the item. If a collision appear, then we can store another elements in this linked list and identify them by the key provided. For example, keys `Abc` and `Abcd` have the same index `62`.
+```
+|  Index  |         List Item 1         |          List Item 2        |
+|  -----  |  -------------------------  |  -------------------------  |
+|    1    |                             |                             |
+|   ...   |                             |                             |
+|   48    | {key: 'test', value: '...'} |                             |
+|   ...   |                             |                             |
+|   62    | {key: 'Abc', value: '...'}  | {key: 'Abcd', value: '...'} | <- Collision
+```
+* Other collision resolution techniques:
+  * Separate chaining with linked list (done in `src/hash-table/hash-table-separate-chaining.ts`), with head cells (TODO research) and with a dynamic array
+  * Open addressing: if a slot is already used, try next one (linear probing).
+
+* In summary: it's great to know and study, but JavaScript (with objects) and PHP (with indexed arrays) cover most of usages of a Hash Table:
+  * Even in JavaScript we can use `var size = Object.keys(myObj).length;` with ES6+ to count how many keys an object has, so the behaviour is very close to an array.
+  * If we need to manage collisions, then we can probably implement our own version of hash maps but it would be simpler than the versions done here: it would be centralised around collision only, and we can use objects for storage.
