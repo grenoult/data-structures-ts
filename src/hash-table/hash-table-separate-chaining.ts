@@ -7,9 +7,9 @@ class HashTableSeparateChaining
     /**
      * Adds value in table based on its key.
      * 
-     * @param key Identifier of the value in table. TODO Must be unique untill collisions are managed.
+     * @param key Identifier of the value in table.
      * @param value Value of any type to store in table.
-     * @returns True on success. TODO update to void?
+     * @returns True on success.
      */
     public add(key: string, value: any): boolean {
         const index = HashTableSeparateChaining.hashKey(key);

@@ -39,6 +39,13 @@ For example: `myVar['abc'] === myVar.abc`.
 
 It comes with its drawbacks, for example not knowing the length of the object natively (up to ES5, see below for more information). 
 
+### Difference with dictionary
+From this [answer](https://stackoverflow.com/a/2061406/1145134):
+
+A dictionary is a general concept that maps keys to values. There are many ways to implement such a mapping.
+A hashtable is a specific way to implement a dictionary.
+Besides hashtables, another common way to implement dictionaries is red-black trees.
+
 ### Thoughts
 * `src/hash-table/hash-table.ts` is a very basic hash table implementation. It doesn't handle collisions well and overwrite previous items. 
 * `src/hash-table/hash-table-separate-chaining.ts` fixes this collision with linked lists: each items in a the array will have a linked list which would be of one item most of the item. If a collision appear, then we can store another elements in this linked list and identify them by the key provided. For example, keys `Abc` and `Abcd` have the same index `62`.
@@ -51,6 +58,28 @@ It comes with its drawbacks, for example not knowing the length of the object na
 |   ...   |                             |                             |
 |   62    | {key: 'Abc', value: '...'}  | {key: 'Abcd', value: '...'} | <- Collision
 ```
+* Time and space complexity (worst case) for Hash Table (no collision management)
+
+Operation | Time Complexity | Comment
+--- | --- | ---
+Insert | O(1) | Insert in list. If collision, we overwrite.
+Find | O(1) | Identify if index exists and returns it.
+Remove | O(1) | Identify if index exists and removes it.
+
+Space complexity: O(n) because each node will occupy O(1) space.
+
+* Time and space complexity (worst case) for Hash Table with separate chaining
+
+[Good article](https://stepik.org/lesson/31445/step/7)
+
+Operation | Time Complexity | Comment
+--- | --- | ---
+Insert | O(n) | All keys have the same index (collision), so we have to loop through the linked list items
+Find | O(n) | All keys have the same index (collision), so we have to loop through the linked list items
+Remove | O(n) | All keys have the same index (collision), so we have to loop through the linked list items
+
+Space complexity: O(n) because each node will occupy O(1) space.
+
 * Other collision resolution techniques:
   * Separate chaining with linked list (done in `src/hash-table/hash-table-separate-chaining.ts`), with head cells (TODO research) and with a dynamic array
   * Open addressing: if a slot is already used, try next one (linear probing).

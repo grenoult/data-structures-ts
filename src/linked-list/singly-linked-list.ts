@@ -20,8 +20,7 @@ class SinglyLinkedList implements LinkedListInterface
             const previousTail = this._tail;
             previousTail.next = newNode;
         }
-
-        this._tail = newNode; // TODO necessary?
+        this._tail = newNode;
     }
 
     public search(value:string): SinglyLinkedListNode {
