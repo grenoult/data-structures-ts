@@ -81,7 +81,10 @@ Remove | O(n) | All keys have the same index (collision), so we have to loop thr
 Space complexity: O(n) because each node will occupy O(1) space.
 
 * Other collision resolution techniques:
-  * Separate chaining with linked list (done in `src/hash-table/hash-table-separate-chaining.ts`), with head cells (TODO research) and with a dynamic array
+  * Separate chaining with:
+    * linked list (done in `src/hash-table/hash-table-separate-chaining.ts`).Each item in array is a linked list: it will contains a list of all items with the same hashed key,
+    * head cells (done in `src/hash-table/hash-table-head-cells.ts`). Each item in array is a linked list node whose `next` item might point to another item from the same hashed key.
+    * dynamic array
   * Open addressing: if a slot is already used, try next one (linear probing).
 
 * In summary: it's great to know and study, but JavaScript (with objects) and PHP (with indexed arrays) cover most of usages of a Hash Table:

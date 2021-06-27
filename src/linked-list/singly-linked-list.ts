@@ -10,7 +10,7 @@ class SinglyLinkedList implements LinkedListInterface
         return this._head;
     }
 
-    public add(value:string): void {
+    public add(value:any): void {
         const newNode = new SinglyLinkedListNode();
         newNode.value = value;
 
@@ -23,7 +23,7 @@ class SinglyLinkedList implements LinkedListInterface
         this._tail = newNode;
     }
 
-    public search(value:string): SinglyLinkedListNode {
+    public search(value:any): SinglyLinkedListNode {
         let currentNode = this._head;
 
         do {

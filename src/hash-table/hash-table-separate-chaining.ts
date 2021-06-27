@@ -1,3 +1,4 @@
+import SinglyLinkedList from "../linked-list/singly-linked-list";
 import SinglyLinkedListNode from "../linked-list/singly-linked-list-node";
 
 class HashTableSeparateChaining
@@ -13,30 +14,29 @@ class HashTableSeparateChaining
      */
     public add(key: string, value: any): boolean {
         const index = HashTableSeparateChaining.hashKey(key);
+        let linkedList = new SinglyLinkedList();
 
-        const linkedListItem = new SinglyLinkedListNode();
-        linkedListItem.value = {key: key, value: value};
-        linkedListItem.next = undefined;
-
-        if (this._table[index] instanceof SinglyLinkedListNode) {
-            // If already value, add item to end of list
-            let node = this._table[index];
-            let previousNode = node;
-            while (node instanceof SinglyLinkedListNode) {
-                if (node.value.key === key) {
-                    // We detected the key (before hash) is already used. Return false.
-                    return false;
-                }
-                previousNode = node;
-                node = node.next;
-            }
-
-            // Add to last item of the list
-            previousNode.next = linkedListItem;
+        // Create linked list if it doesn't exist yet
+        if (this._table[index] instanceof SinglyLinkedList) {
+            linkedList = this._table[index];
         } else {
-            // If index is not used yet, add node
-            this._table[index] = linkedListItem;
+            this._table[index] = linkedList;
         }
+
+        // Add item to end of list
+        let node = linkedList.head;
+        while (node instanceof SinglyLinkedListNode) {
+            // First, search if key is already existing to avoid a second level collision
+            if (node.value.key === key) {
+                // We detected the key (before hash) is already used. Return false.
+                return false;
+            }
+            node = node.next;
+        }
+
+        // Add to last item of the list
+        linkedList.add({ key: key, value: value });
+
         return true;
     }
 
@@ -48,18 +48,30 @@ class HashTableSeparateChaining
      */
     public find(key: string): any {
         const index = HashTableSeparateChaining.hashKey(key);
-        if (index in this._table) {
-            // Index exists: let's go through linked list nodes to find item
-            let node = this._table[index];
-            while (node instanceof SinglyLinkedListNode) {
-                if (node.value.key === key) {
-                    // We found matching key, we return value;
-                    return node.value.value;
-                }
-                node = node.next;
-            }
+
+        if (!(index in this._table)) {
+            // This index is not used
+            return undefined;
+        }
+        // Index exists: let's go through linked list nodes to find item
+        let list = this._table[index];
+
+        if (!(list instanceof SinglyLinkedList)) {
+            // This index is not used
+            return undefined;
         }
 
+        let node = list.head;
+
+        while (node instanceof SinglyLinkedListNode) {
+            if (node.value.key === key) {
+                // We found matching key, we return value;
+                return node.value.value;
+            }
+            node = node.next;
+        }
+
+        // We looped through the list but we couldn't find the key
         return undefined;
     }
 
@@ -71,28 +83,29 @@ class HashTableSeparateChaining
      */
     public remove(key: string): boolean {
         const index = HashTableSeparateChaining.hashKey(key);
-        if (index in this._table) {
-            // Index exists: let's go through linked list nodes to find item
-            let node = this._table[index];
-            let previousNode = undefined;
-            while (node instanceof SinglyLinkedListNode) {
-                if (node.value.key === key) {
-                    // update previous node or head
-                    if (previousNode instanceof SinglyLinkedListNode) {
-                        previousNode.next = node.next;
-                    } else {
-                        this._table[index] = node.next;
-                    }
 
-                    // `node` will be removed during garbage collection
+        if (!(index in this._table)) {
+            // This index is not used
+            return undefined;
+        }
+        // Index exists: let's go through linked list nodes to find item
+        let list = this._table[index];
 
-                    return true;
-                }
+        if (!(list instanceof SinglyLinkedList)) {
+            // This index is not used
+            return undefined;
+        }
 
-                // Item not found, let's go to the next node in the linked list
-                previousNode = node;
-                node = node.next;
+        // Index exists: let's go through linked list nodes to find item
+        let node = list.head;
+        while (node instanceof SinglyLinkedListNode) {
+            if (node.value.key === key) {
+                list.remove(node);
+                return true;
             }
+
+            // Item not found, let's go to the next node in the linked list
+            node = node.next;
         }
 
         // Item not found in the list, return false;
